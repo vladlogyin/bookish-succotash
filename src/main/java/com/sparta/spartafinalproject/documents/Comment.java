@@ -1,5 +1,6 @@
 package com.sparta.spartafinalproject.documents;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,11 +13,16 @@ import java.util.Date;
 public class Comment {
 
     @Id @Field(targetType = FieldType.OBJECT_ID)
+    @JsonProperty("_id")
     private String id;
+    @JsonProperty("date")
     private Date date;
+    @JsonProperty("email")
     private String email;
-    @DBRef @Field(targetType = FieldType.OBJECT_ID)
+    @JsonProperty("movie_id")
+    @DBRef
     private Movie movie;
+    @JsonProperty("text")
     private String text;
 
     public Comment(String id, Date date, String email, Movie movie, String text) {
