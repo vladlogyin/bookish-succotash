@@ -1,0 +1,133 @@
+<!DOCTYPE Html >
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<Head>
+    <Title>
+        Make a Navigation Bar
+    </Title>
+    <style>
+        body {
+            height: 125vh;
+            margin-top: 80px;
+            padding: 30px;
+            background-size: cover;
+            font-family: sans-serif;
+
+        }
+
+        header {
+            background-color: #2c2c2c;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            z-index: 2;
+
+        }
+
+        header * {
+            display: inline;
+
+        }
+
+        header li {
+            margin: 20px;
+
+        }
+
+        header li a {
+            color: #ffffff;
+            text-decoration: none;
+
+        }
+    </style>
+    <style>
+        .menubtn {
+            background-color: #2c2c2c;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 75px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .menubtn {
+            background-color: #101010;
+        }
+
+    </style>
+    <style>
+        .no-underline{
+            text-decoration: none;
+        }
+        img {
+            height: 15px;
+
+            max-width: 75px;
+            max-height: 150px;
+        }
+    </style>
+</Head>
+<Body>
+<header>
+    <nav>
+        <ul>
+            <div class="dropdown"><img src=https://i.imgur.com/zXhjEyM.png></div>
+            <div class="dropdown">
+                <button class="menubtn">Home</button>
+                <div class="dropdown-content">
+                    <a href="/home">Home</a>
+                </div>
+            </div>
+            <div class="dropdown" sec:authorize="hasAnyAuthority('USER','ADMIN')">
+                <a class="no-underline" href="/movies/all"><button class="menubtn">Movies</button></a>
+            </div>
+            <div class="dropdown" sec:authorize="!hasAnyAuthority('ADMIN')">
+                <a class="no-underline" href="/users/all"><button class="menubtn">Users</button></a>
+            </div>
+            <div class="dropdown" sec:authorize="hasAnyAuthority('USER','ADMIN')">
+                <a class="no-underline" href="/theatres/all"><button class="menubtn">Theatres</button></a>
+            </div>
+            <div class="dropdown" sec:authorize="hasAnyAuthority('ADMIN')">
+                <a class="no-underline" href="/schedules/all"><button class="menubtn">Schedules</button></a>
+            </div>
+            <div class="dropdown" sec:authorize="!isAuthenticated()">
+                <a class="no-underline" href="/login"><button class="menubtn">Sign in</button></a>
+            </div>
+
+        </ul>
+    </nav>
+</header>
+</Body>
+</html>
