@@ -1,4 +1,5 @@
 package com.sparta.spartafinalproject.documents;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
@@ -6,8 +7,8 @@ public class User {
     private String password;
     private String name;
 
-    @org.springframework.data.annotation.Id
-    private String _id;
+    @Id
+    private String id;
     private String email;
 
     public void setPassword(String password) {
@@ -27,11 +28,11 @@ public class User {
     }
 
     public void setId(String id) {
-        this._id = id;
+        this.id = id;
     }
 
     public String getId() {
-        return _id;
+        return id;
     }
 
     public void setEmail(String email) {
