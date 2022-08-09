@@ -2,36 +2,25 @@ package com.sparta.spartafinalproject.documents;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.*;
 
 import java.util.Date;
 
-@Document(collection="comments")
+@Document("comments")
 public class Comment {
 
-    @Id @Field(targetType = FieldType.OBJECT_ID)
-    @JsonProperty("_id")
+    @Id
+    //@JsonProperty("_id")
     private String id;
-    @JsonProperty("date")
-    private Date date;
-    @JsonProperty("email")
-    private String email;
-    @JsonProperty("movie_id")
-    @DBRef
-    private Movie movie;
-    @JsonProperty("text")
-    private String text;
 
-    public Comment(String id, Date date, String email, Movie movie, String text) {
-        this.id = id;
-        this.date = date;
-        this.email = email;
-        this.movie = movie;
-        this.text = text;
-    }
+    private Date date;
+
+    private String email;
+
+    @DocumentReference() @DBRef
+    @Field(name="movie_id")
+    private Movie movie;
+    private String text;
 
     public String getId() {
         return id;
