@@ -12,17 +12,11 @@ import java.util.Date;
 @Document(collection="comments")
 public class Comment {
 
-    @Id @Field(targetType = FieldType.OBJECT_ID)
-    @JsonProperty("_id")
+    @Id
     private String id;
-    @JsonProperty("date")
     private Date date;
-    @JsonProperty("email")
     private String email;
-    @JsonProperty("movie_id")
-    @DBRef
     private Movie movie;
-    @JsonProperty("text")
     private String text;
 
     public Comment(String id, Date date, String email, Movie movie, String text) {
