@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Users</title>
+<style>
+    table{
+        font-family: monospace, Lucida Console;
+        border-collapse: collapse;
+        border-color: cornflowerblue;
+        width: 100%;
+    }
+    th{
+        border: 1px solid #dddddd;
+        background-color: darkgrey;
+        text-align: left;
+        padding: 9px;
+    }
+    td{
+        border: 1px solid #dddddd;
+        background-color: lightgray;
+        text-align: left;
+        padding: 9px;
+    }
+    tr:nth-child(even){
+        background-color: beige;
+    }
+</style>
+</head>
+<body>
+<form class="form-inline my-2 my-lg-0">
+    <a class="btn btn-outline-success my-2 my-sm-0" href="/movie/new">Add new movie</a>
+</form>
+<h2>Movie list</h2>
+<table >
+    <tr>
+        <th> Title </th>
+        <th> Year </th>
+        <th> Runtime </th>
+        <th> Poster </th>
+        <th> Plot </th>
+        <th> Genre </th>
+        <th> Directors </th>
+        <th> Cast </th>
+        <th> IMDB rating </th>
+        <th> IMDB votes </th>
+        <th> IMDB id </th>
+        <th> Rotten tomatoes rating</th>
+        <th> Rotten tomatoes number of reviews</th>
+        <th> Number of comments</th>
+        <th> Last updated </th>
+        <th> </th>
+        <th> </th>
+    </tr>
+    <tr th:each="movie: ${movie}">
+        <td th:text="${movie.title}"></td>
+        <td th:text="${movie.year}"></td>
+        <td th:text="${movie.runtime}"></td>
+        <td th:text="${movie.poster}"></td>
+        <td th:text="${movie.plot}"></td>
+        <td th:text="${movie.genre}"></td>
+        <td th:text="${movie.directors}"></td>
+        <td th:text="${movie.cast}"></td>
+        <td th:text="${movie.imdbrating}"></td>
+        <td th:text="${movie.imdbvotes}"></td>
+        <td th:text="${movie.imdbid}"></td>}
+        <td th:text="${movie.rottontomatoesrating}"></td>
+        <td th:text="${movie.rottontomatoesnumberofreviews}"></td>
+        <td th:text="${movie.numberofcomments}"></td>
+        <td th:text="${movie.lastupdated}"></td>
+        <td><button class="btn btn-primary" th:onclick="@{window.location.href='/movie/{id}';(id=${movie.id})}">View movie comments</button></td>
+        <td><button class="btn btn-danger"th:onclick="@{window.location.href='/movie/edit/{id}';(id=${movie.id})}">Edit movie</button></td>
+    </tr>
+
+</table>
+
+</body>
+</html>

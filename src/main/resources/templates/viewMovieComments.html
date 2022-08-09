@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of comments</title>
+</head>
+<body>
+<style>
+    table{
+        font-family: monospace, Lucida Console;
+        border-collapse: collapse;
+        border-color: cornflowerblue;
+        width: 100%;
+    }
+    th, td{
+        border: 1px solid #dddddd;
+        background-color: darkgrey;
+        text-align: left;
+        padding: 9px;
+    }
+    tr:nth-child(even){
+        background-color: beige;
+    }
+</style>
+<form class="form-inline my-2 my-lg-0">
+    <a class="btn btn-outline-success my-2 my-sm-0" href="/comments/new">Add new comment</a>
+</form>
+<h2>Comment list</h2>
+<table >
+    <tr>
+        <th> User name</th>
+        <th> Email </th>
+        <th> Comment </th>
+        <th> Date last edited </th>
+    </tr>
+    <tr th:each="commment: ${comment}">
+        <td th:text="${comment.name}"></td>
+        <td th:text="${comment.email}"></td>
+        <td th:text="${comment.text}"></td>
+        <td th:text="${comment.date}"></td>
+</table>
+</body>
+</html>
