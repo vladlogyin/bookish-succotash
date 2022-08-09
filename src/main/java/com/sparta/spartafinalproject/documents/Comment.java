@@ -13,6 +13,8 @@ public class Comment {
     //@JsonProperty("_id")
     private String id;
 
+    private String name;
+
     private Date date;
 
     private String email;
@@ -30,7 +32,15 @@ public class Comment {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDate(){
         return date;
     }
 

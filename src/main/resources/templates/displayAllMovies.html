@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Movies</title>
+<style>
+    table{
+        font-family: monospace, Lucida Console;
+        border-collapse: collapse;
+        border-color: cornflowerblue;
+        width: 50%;
+    }
+    th{
+        border: 1px solid #dddddd;
+        background-color: darkgrey;
+        text-align: left;
+        padding: 9px;
+    }
+    td{
+        border: 3px solid #dddddd;
+        background-color: lightgray;
+        text-align: left;
+        padding: 9px;
+    }
+    tr:nth-child(even){
+        background-color: beige;
+    }
+</style>
+</head>
+<body>
+<iframe src="./navigationBar.html" width="100%" height="50" style="border:none;"></iframe>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="navbar.html">
+<form class="form-inline my-2 my-lg-0">
+    <a class="btn btn-outline-success my-2 my-sm-0" href="/movie/new">Add new movie</a>
+</form>
+<h2>Movie list</h2>
+sable>
+
+</body>
+</html>dadw

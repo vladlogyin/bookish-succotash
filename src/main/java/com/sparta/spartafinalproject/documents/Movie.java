@@ -51,4 +51,12 @@ public class Movie {
     public void setPlot(String plot) {
         this.plot = plot;
     }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 }
