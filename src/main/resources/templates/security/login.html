@@ -20,15 +20,21 @@
     form {
       border: 3px solid #f1f1f1;
     }
+    .container{
+      padding: 25px;
+      background-color: magenta;
+    }
   </style>
 </head>
 <body>
-<div th:insert="../static/navigationBar.html" :: header> </div>
+<!--<div th:insert="../static/navigationBar.html" :: header></div>-->
 <center><h1>Login</h1></center>
 <form th:action="@{/login}" method="POST">
+  <div class="container">
   <label>Username<input type="text" name="username"/></label><br/>
   <label>Password<input type="password" name="password"/></label><br/>
   <input type="submit" value="Login"/>
+  </div>
 </form>
 
 </body>
