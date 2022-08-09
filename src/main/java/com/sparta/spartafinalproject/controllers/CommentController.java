@@ -1,6 +1,7 @@
 package com.sparta.spartafinalproject.controllers;
 
 import com.sparta.spartafinalproject.documents.Comment;
+import com.sparta.spartafinalproject.documents.Movie;
 import com.sparta.spartafinalproject.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,12 @@ public class CommentController {
 
     @GetMapping("/comments/email/{email}")
     public List<Comment> getCommentByEmail(@PathVariable String email){
-        return repo.findByEmail(email);
+        return repo.findAllByEmail(email);
     }
 
-    @GetMapping("/comments/movie/{movie}")
-    public List<Comment> getCommentByMovie(@PathVariable String movie){
-        return repo.findByMovie(movie);
+    @GetMapping("/comments/movie")
+    public List<Comment> getCommentsByMovie(@RequestBody Movie movie){
+        return repo.findAllByMovie(movie);
     }
 
     @PostMapping("/comments/add")
