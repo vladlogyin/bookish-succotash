@@ -25,7 +25,7 @@ public class CommentController {
 
     @GetMapping("/comments/name/{name}")
     public List<Comment> getCommentByName(@PathVariable String name){
-        return repo.findByName(name);
+        return repo.findAllByName(name);
     }
 
     @GetMapping("/comments/email/{email}")

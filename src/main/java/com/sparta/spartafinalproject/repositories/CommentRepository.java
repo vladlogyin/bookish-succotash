@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends MongoRepository<Comment, String> {
 
+    List<Comment> findAllByName(String name);
+
     List<Comment> findAllByEmail(String email);
 
     List<Comment> findAllByMovie(Movie movie);
