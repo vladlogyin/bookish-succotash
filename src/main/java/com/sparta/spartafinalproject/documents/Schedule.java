@@ -9,9 +9,6 @@ public class Schedule {
 
     @Id
     private String id;
-
-
-
     private Movie movie;
     private Theater theater;
     private String time;
