@@ -8,7 +8,7 @@
           margin: 7% 15%;
       }
       h1{
-          color: purple;
+          color: #800080;
           font-size: 100px;
       }
     table {
@@ -38,7 +38,7 @@
 <body>
 <div th:insert="../static/navigationbar.html" :: header> </div>
 <h1 th:text="${title}"></h1>
-<form th:action="'/' + ${creationExtension} +" method="get">
+<form th:action="'/' + ${creationExtension}" method="get">
 
     <button class="createbtn">Create</button>
 </form>
@@ -48,16 +48,24 @@
     <thead>
     <tr>
         <th th:each="fieldName:${fieldNames}" text=" hi"> <span th:text="${fieldName}" /> </th>
-        <th>update</th>
-        <th>delete</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
 <!--        <th>ID</th>-->
 <!--        <th> First Name </th>-->
 <!--        <th>Last Name</th>-->
     </tr>
 </thead>
-    <tr th:each="entity:${entityList}">
+    <tr th:each="entity: ${entityList}">
 <!--        <tr>-->
-        <td th:each="field:${entity}"><span th:text="${field}"></span></td>
+        <td th:each="field, iter:${entity}">
+            <span th:text="${field}"></span>
+        </td>
+        <td >
+            <form th:action="'/' + ${getExtension} + '/'  + ${entity[0]} " method="get">
+                <button>More info</button>
+            </form>
+        </td>
 
         <td >
             <form th:action="'/' + ${updateExtension} + '/'  + ${entity[0]} " method="get">

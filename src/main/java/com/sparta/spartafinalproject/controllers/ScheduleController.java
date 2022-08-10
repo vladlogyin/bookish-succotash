@@ -24,14 +24,14 @@ public class ScheduleController {
 
         return repo.findById(id).get();
     }
-    @GetMapping("/schedule/by-time/{time}")
-    public Schedule getScheduleByTime(@PathVariable String time){
-        return repo.findByTime(time);
+    @GetMapping("/schedules/by-time/{time}")
+    public List<Schedule> getScheduleByTime(@PathVariable String time){
+        return repo.findAllByTime(time);
     }
-    @GetMapping("/Schedule/by-theaterid/{id}")
-    public List<Object> getScheduleByTheaterId(@PathVariable int id){
+    @GetMapping("/schedule/by-theaterid/{id}")
+    public List<Schedule> getScheduleByTheaterId(@PathVariable int id){
 
-        return repo.findByTheaterId(id);
+        return repo.findAllByTheaterId(id);
     }
     @PostMapping("/schedule/add")
     public Schedule addTheater(@RequestBody Schedule newSchedule){

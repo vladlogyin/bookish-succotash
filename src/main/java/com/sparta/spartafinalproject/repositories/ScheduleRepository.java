@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface ScheduleRepository extends MongoRepository<Schedule, String> {
-    List<Object> findByTheaterId(int id);
+    List<Schedule> findAllByTheaterId(int id);
 
-    Schedule findByTime(String time);
+    List<Schedule> findAllByMovieId(String movieId);
+
+    List<Schedule> findAllByTime(String time);
 }

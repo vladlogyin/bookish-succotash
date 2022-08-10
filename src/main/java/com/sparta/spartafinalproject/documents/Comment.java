@@ -19,9 +19,8 @@ public class Comment {
 
     private String email;
 
-    @DocumentReference() @DBRef
-    @Field(name="movie_id")
-    private Movie movie;
+    @Field(name="movie_id", targetType = FieldType.OBJECT_ID)
+    private String movieId;
     private String text;
 
     public String getId() {
@@ -56,12 +55,12 @@ public class Comment {
         this.email = email;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public String getMovieId() {
+        return movieId;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovieId(String movie) {
+        this.movieId = movie;
     }
 
     public String getText() {

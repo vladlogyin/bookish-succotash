@@ -25,13 +25,15 @@
         tr:nth-child(even){
             background-color: beige;
         }
+        button{
+            font:icon;
+        }
     </style>
 </head>
 <body>
-<iframe src="./navigationbar.html" width="100%" height="50" style="border:none;"></iframe>
-<nav class="navbar navbar-expand-lg navbar-light bg-light" th:replace="navbar.html">
+<iframe src="../static/navigationbar.html" width="100%" height="50" style="border:none;"></iframe>
     <form class="form-inline my-2 my-lg-0">
-        <a class="btn btn-outline-success my-2 my-sm-0" href="/movie/new">Add new user</a>
+        <button class="btn btn-outline-success my-2 my-sm-0" href="/movie/new">Add new user</button>
     </form>
     <h2>User list</h2>
     <table >
@@ -42,15 +44,14 @@
             <th> </th>
             <th> </th>
         </tr>
-        <tr th:each="user: ${user}">
+        <tr th:each="user: ${users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>
-            <td><button class="btn btn-primary" th:onclick="@{window.location.href='/user/{id}';(id=${movie.id})}">View user </button></td>
-            <td><button class="btn btn-danger"th:onclick="@{window.location.href='/user/edit/{id}';(id=${movie.id})}">Edit user</button></td>
+            <td><button class="btn btn-primary" th:onclick="@{window.location.href='/user/{id}';(id=${user.id})}">View user </button></td>
+            <td><button class="btn btn-danger"th:onclick="@{window.location.href='/user/edit/{id}';(id=${user.id})}">Edit user</button></td>
         </tr>
 
     </table>
-
 </body>
 </html>

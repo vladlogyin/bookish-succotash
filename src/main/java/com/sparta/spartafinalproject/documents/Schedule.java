@@ -3,6 +3,7 @@ package com.sparta.spartafinalproject.documents;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("schedule")
 public class Schedule {
@@ -10,26 +11,26 @@ public class Schedule {
     @Id
     private String id;
 
-
-
-    private Movie movie;
-    private Theater theater;
+    @Field(name="movie")
+    private String movieId;
+    @Field(name="theaterId")
+    private String theaterId;
     private String time;
 
-    public Movie getMovie() {
-        return movie;
+    public String getMovieId() {
+        return movieId;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovieId(String movie) {
+        this.movieId = movie;
     }
 
-    public Theater getTheater() {
-        return theater;
+    public String getTheaterId() {
+        return theaterId;
     }
 
-    public void setTheater(Theater theater) {
-        this.theater = theater;
+    public void setTheaterId(String theater) {
+        this.theaterId = theater;
     }
 
     public String getTime() {

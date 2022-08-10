@@ -25,7 +25,7 @@ public class MovieController {
 
     @GetMapping("/movies/title/{title}")
     public List<Movie> getMovieByTitle(@PathVariable String title){
-        return repo.findByTitle(title);
+        return repo.findByTitleContainsIgnoreCase(title);
     }
 
     @PostMapping("/movies/add")
