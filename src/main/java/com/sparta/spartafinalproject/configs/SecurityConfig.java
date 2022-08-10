@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @EnableWebSecurity
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/home", "/movies", "/theatres", "/comments").permitAll()
-                .antMatchers("/logout", "/comments/**").hasAnyAuthority("USER","ADMIN")
+                .antMatchers("/logout", "/comments/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin()
@@ -49,5 +49,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .and().exceptionHandling().accessDeniedPage("/accessDenied");
+
+//        http.authorizeRequests()
+//                .antMatchers("/home", "/movies", "/theatres", "/comments").permitAll()
+//                .antMatchers("/logout", "/comments/**").hasAnyAuthority("USER","ADMIN")
+//                .antMatchers("/**").hasAuthority("ADMIN")
+//                .anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/home",true).permitAll().and().exceptionHandling()
+//                .accessDeniedPage("/accessDenied")
+//                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/home").clearAuthentication(true).deleteCookies();
     }
 }
