@@ -64,10 +64,16 @@ public class NavigationController {
         model.addAttribute("id", id);
         return "updateuserbyid";
     }
-    @GetMapping("/updatecschedules/{id}")
+    @GetMapping("/updateschedules/{id}")
     public String updateScheduleById(@PathVariable String id , Model model){
         model.addAttribute("id", id);
-        return "updateSchedulesbyid";
+        return "/schedules/updateschedulebyid";
+    }
+
+    @GetMapping("/updatemovies/{id}")
+    public String updatemovies(@PathVariable String id, Model model){
+        model.addAttribute("id", id);
+        return "/movies/updatemoviebyid";
     }
 
 
