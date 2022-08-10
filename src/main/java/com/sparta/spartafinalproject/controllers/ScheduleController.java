@@ -4,8 +4,11 @@ import com.sparta.spartafinalproject.documents.Schedule;
 import com.sparta.spartafinalproject.documents.Theater;
 import com.sparta.spartafinalproject.repositories.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.spi.ResolveResult;
 import java.util.List;
 
 @RestController
@@ -16,27 +19,39 @@ public class ScheduleController {
 
     @GetMapping("/schedule")
     public List<Schedule> getAllSchedule(){
-
         return repo.findAll();
     }
     @GetMapping("/schedule/by-id/{id}")
-    public Schedule getScheduleById(@PathVariable String id){
-
-        return repo.findById(id).get();
+    public ResponseEntity<Schedule> getScheduleById(@PathVariable String id){
+        if(repo.existsById(id)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id).get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
+
     @GetMapping("/schedule/by-time/{time}")
-    public Schedule getScheduleByTime(@PathVariable String time){
-        return repo.findByTime(time);
+    public ResponseEntity<Schedule> getScheduleByTime(@PathVariable String time){
+        if(repo.existsByTime(time)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTime(time));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-    @GetMapping("/Schedule/by-theaterid/{id}")
-    public List<Object> getScheduleByTheaterId(@PathVariable int id){
 
-        return repo.findByTheaterId(id);
+    @GetMapping("/Schedule/by-theaterid/{theaterId}")
+    public ResponseEntity<List<Object>> getScheduleByTheaterId(@PathVariable int theaterId){
+        if(repo.existsByTheaterId(theaterId)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTheaterId(theaterId));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
+
     @PostMapping("/schedule/add")
-    public Schedule addTheater(@RequestBody Schedule newSchedule){
+    public ResponseEntity<String> addSchedule(@RequestBody Schedule newSchedule){
+        if(repo.existsById(newSchedule.getId())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This schedule already exists");
+        }
         repo.save(newSchedule);
-        return newSchedule;
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
     @PutMapping("/schedule/update")
     public Schedule updateSchedule(@RequestBody Schedule updatedSchedule){
