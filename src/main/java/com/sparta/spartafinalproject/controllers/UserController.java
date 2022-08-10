@@ -3,6 +3,8 @@ package com.sparta.spartafinalproject.controllers;
 import com.sparta.spartafinalproject.documents.User;
 import com.sparta.spartafinalproject.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,21 +18,29 @@ public class UserController {
 
     @GetMapping("/user/all")
     public List<User> getAllUsers() {
-
         return repo.findAll();
     }
     @GetMapping("/users/by-id/{id}")
-    public User getUserById(@PathVariable String id){
-        return repo.findById(id).get();
+    public ResponseEntity<User> getUserById(@PathVariable String id){
+        if(repo.existsById(id)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id).get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
     @GetMapping("/users/by-name/{name}")
-    public User getUserByName(@PathVariable String name){
-        return repo.findByName(name);
+    public ResponseEntity<User> getUserByName(@PathVariable String name){
+        if(repo.existsByNamen(name)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findByName(name));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
     @GetMapping("/users/by-email/{email}")
-    public Optional<User> getUserByEmail(@PathVariable String email){
-        return repo.findByEmail(email);
+    public ResponseEntity<Optional<User>> getUserByEmail(@PathVariable String email){
+        if(repo.existsByEmail(email)){
+            return  ResponseEntity.status(HttpStatus.OK).body(repo.findByEmail(email));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @DeleteMapping("/user/delete/{id}")
@@ -44,9 +54,12 @@ public class UserController {
         repo.delete(user);
     }
     @PostMapping("/user/new")
-    public User newUser(@RequestBody User newUser){
+    public ResponseEntity<String> newUser(@RequestBody User newUser){
+        if(repo.existsById(newUser.getId())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this user already exists");
+        }
         repo.save(newUser);
-        return newUser;
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @PatchMapping("/user/update/{id}")
