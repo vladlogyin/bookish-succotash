@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface TheaterRepository extends MongoRepository<Theater,String> {
     Optional<Theater> findByTheaterId(int id);
     void deleteByTheaterId(int id);
+
+    boolean existByTheaterId(int id);
 }

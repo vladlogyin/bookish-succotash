@@ -1,13 +1,14 @@
 package com.sparta.spartafinalproject.controllers;
 
-import com.sparta.spartafinalproject.documents.Movie;
 import com.sparta.spartafinalproject.documents.Theater;
-import com.sparta.spartafinalproject.repositories.MovieRepository;
 import com.sparta.spartafinalproject.repositories.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TheaterController {
@@ -21,19 +22,28 @@ public class TheaterController {
     }
 
     @GetMapping("/theater/by-id/{id}")
-    public Theater getTheaterById(@PathVariable String id){
-        return repo.findById(id).get();
+    public ResponseEntity<Theater> getTheaterById(@PathVariable String id){
+        if(repo.existsById(id)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id).get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @GetMapping("/theater/by-theaterid/{id}")
-    public Theater getTheaterByTheaterId(@PathVariable int id){
-        return repo.findByTheaterId(id).get();
+    public ResponseEntity<Optional<Theater>> getTheaterByTheaterId(@PathVariable int id){
+        if(repo.existByTheaterId(id)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTheaterId(id));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PostMapping("/theater/add")
-    public Theater addTheater(@RequestBody Theater newTheater){
+    public ResponseEntity<String> addTheater(@RequestBody Theater newTheater){
+        if(repo.existsById(newTheater.getId())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This theater already exists");
+        }
         repo.save(newTheater);
-        return newTheater;
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @PutMapping("/theater/update")
