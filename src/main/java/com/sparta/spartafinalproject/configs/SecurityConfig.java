@@ -12,5 +12,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/home", "/movies", "/theatres", "/comments").permitAll()
+                .antMatchers("/movies/**", "/logout", "/comments/**").hasAnyAuthority("USER","ADMIN")
+                .antMatchers("/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/home",true).permitAll().and().exceptionHandling()
+                .accessDeniedPage("/accessDenied")
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/home").clearAuthentication(true).deleteCookies();
     }
 }
