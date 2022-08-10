@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ScheduleRepository extends MongoRepository<Schedule, String> {
     List<Object> findByTheaterId(int id);
+
+    Schedule findByTime(String time);
 }

@@ -24,6 +24,10 @@ public class ScheduleController {
 
         return repo.findById(id).get();
     }
+    @GetMapping("/schedule/by-time/{time}")
+    public Schedule getScheduleByTime(@PathVariable String time){
+        return repo.findByTime(time);
+    }
     @GetMapping("/Schedule/by-theaterid/{id}")
     public List<Object> getScheduleByTheaterId(@PathVariable int id){
 
