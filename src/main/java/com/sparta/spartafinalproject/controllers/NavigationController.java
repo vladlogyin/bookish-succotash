@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class NavigationController {
-    @GetMapping("/home")
-    public String home(){
-        return "home";
-    }
+
 
     //_________POST_____________
     @GetMapping("/createcomment")
