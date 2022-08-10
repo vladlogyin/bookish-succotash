@@ -20,11 +20,11 @@ public class NavigationController {
     //_________POST_____________
     @GetMapping("/createcomment")
     public String createComment(){
-        return "createcomment";
+        return "/comments/createcomment";
     }
     @GetMapping("/createtheatre")
     public String createTheatre(){
-        return "createtheatre";
+        return "/theatres/createtheatre";
     }
     @GetMapping("/createuser")
     public String createUser(Model model){
@@ -45,24 +45,24 @@ public class NavigationController {
     }
     @GetMapping("/createschedule")
     public String createSchedule(){
-        return "createschedule";
+        return "/schedules/createschedule";
     }
 
     //__________UPDATE____________
     @GetMapping("/updatecomments/{id}")
     public String updateCommentById(@PathVariable String id , Model model){
         model.addAttribute("id", id);
-        return "updatecommentbyid";
+        return "/comments/updatecommentbyid";
     }
     @GetMapping("/updatetheatres/{id}")
     public String updateTheatreById(@PathVariable String id , Model model){
         model.addAttribute("id", id);
-        return "updatetheatrebyid";
+        return "/theatres/updatetheatrebyid";
     }
     @GetMapping("/updateusers/{id}")
     public String updateUserById(@PathVariable String id , Model model){
         model.addAttribute("id", id);
-        return "updateuserbyid";
+        return "/users/updateuserbyid";
     }
     @GetMapping("/updateschedules/{id}")
     public String updateScheduleById(@PathVariable String id , Model model){
