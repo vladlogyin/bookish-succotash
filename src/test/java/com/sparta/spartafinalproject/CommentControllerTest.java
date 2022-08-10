@@ -1,5 +1,6 @@
 package com.sparta.spartafinalproject;
 
+import com.sparta.spartafinalproject.controllers.CommentController;
 import com.sparta.spartafinalproject.documents.Comment;
 import com.sparta.spartafinalproject.documents.Movie;
 import com.sparta.spartafinalproject.repositories.CommentRepository;
@@ -7,16 +8,24 @@ import com.sparta.spartafinalproject.repositories.MovieRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.sparta.spartafinalproject.TestUtils.asJsonString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -85,5 +94,21 @@ public class CommentControllerTest {
         ).andExpect(status().is2xxSuccessful());
         Assertions.assertEquals(countBeforeCreation + 1, repo.count(), "Count did not increase");
 
+        //Request
+        mvc.perform(get("/comments/id/"+testComment.getId()))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().json(asJsonString(testComment)));
+
+        //Update
+        testComment.setEmail("newEmail123@gmail.com");
+        mvc.perform(put("/comments/update")
+                .content(asJsonString(testComment))
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().is2xxSuccessful());
+
+        //Delete
+        mvc.perform(delete("/movcomments/delete/"+testComment.getId()))
+                .andExpect(status().is2xxSuccessful());
+        Assertions.assertFalse(repo.existsById(testComment.getId()));
     }
 }
