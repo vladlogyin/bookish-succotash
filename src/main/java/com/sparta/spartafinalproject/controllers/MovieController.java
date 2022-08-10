@@ -36,9 +36,13 @@ public class MovieController {
     }
 
     @PostMapping("/movies/add")
-    public Movie addMovie(@RequestBody Movie newMovie){
+    public ResponseEntity<String> addMovie(@RequestBody Movie newMovie){
+        if(repo.existsById(newMovie.getId())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This movie allready exists");
+        }
         repo.save(newMovie);
-        return newMovie;
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
+
     }
 
     @PutMapping("/movies/update")
