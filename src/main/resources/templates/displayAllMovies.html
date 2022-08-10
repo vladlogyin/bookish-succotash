@@ -34,7 +34,25 @@
     <a class="btn btn-outline-success my-2 my-sm-0" href="/movie/new">Add new movie</a>
 </form>
 <h2>Movie list</h2>
-sable>
+    <table >
+        <tr>
+            <th> Title </th>
+            <th> Release Date </th>
+            <th> Plot </th>
+            <th> Number of comments</th>
+            <th> </th>
+            <th> </th>
+        </tr>
+        <tr th:each="movie: ${movie}">
+            <td th:text="${movie.title}"></td>
+            <td th:text="${movie.year}"></td>
+            <td th:text="${movie.plot}"></td>
+            <td th:text="${movie.numberofcomments}"></td>
+            <td><button class="btn btn-primary" th:onclick="@{window.location.href='/movie/{id}';(id=${movie.id})}">View movie comments</button></td>
+            <td><button class="btn btn-danger"th:onclick="@{window.location.href='/movie/edit/{id}';(id=${movie.id})}">Edit movie</button></td>
+        </tr>
+
+    </table>
 
 </body>
 </html>
