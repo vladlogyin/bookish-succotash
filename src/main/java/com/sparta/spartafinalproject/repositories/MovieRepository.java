@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends MongoRepository<Movie, String> {
     List<Movie> findByTitle(String title);
+
+    boolean existsByTitle(String title);
 }
