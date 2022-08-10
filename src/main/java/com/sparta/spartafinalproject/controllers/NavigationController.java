@@ -1,16 +1,21 @@
 package com.sparta.spartafinalproject.controllers;
 
+import com.sparta.spartafinalproject.documents.Comment;
+import com.sparta.spartafinalproject.documents.Movie;
+import com.sparta.spartafinalproject.documents.Theater;
+import com.sparta.spartafinalproject.documents.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class NavigationController {
-    @GetMapping("/home")
-    public String home(){
-        return "home";
-    }
 
     //_________POST_____________
     @GetMapping("/createcomment")
@@ -22,8 +27,21 @@ public class NavigationController {
         return "createtheatre";
     }
     @GetMapping("/createuser")
-    public String createUser(){
-        return "createuser";
+    public String createUser(Model model){
+        User user = new User();
+        model.addAttribute("newUser",user);
+        return "/users/createuser";
+    }
+/*    @PostMapping("/createueer/post")
+    public String commitUsertoDatabase(@RequestBody ){
+
+    }*/
+
+    @GetMapping("/createmovie")
+    public String createMovie(Model model){
+        Movie movie = new Movie();
+        model.addAttribute("newMovie", movie);
+        return "/movies/createmovie";
     }
     @GetMapping("/createschedule")
     public String createSchedule(){
@@ -55,20 +73,104 @@ public class NavigationController {
 
     //__________GET ALL____________
     @GetMapping("/comments/all")
-    public String displayAllComments(){
-        return "displayallcomments";
+    public String displayAllComments(Model model){
+        //List<Comment> comments = todo mvc.getallcomments();
+        List <List<String>> fields = new ArrayList<>();
+        List <String> temp = new ArrayList<>();
+        for (Comment c : comments){
+            temp.clear(); //empty the list first
+
+            temp.add(c.getId());
+            temp.add(c.getName());
+            temp.add(String.valueOf(c.getDate()));
+            temp.add(c.getEmail());
+
+            fields.add(temp); //commit list to overall list at end
+        }
+        String[] fieldNames ={"id","Name","Date","Email"};
+
+        model.addAttribute("entityList" , fields);
+        model.addAttribute("fieldNames", fieldNames);
+        model.addAttribute("title", "All comments");
+        model.addAttribute("creationExtension", "createcomment");
+        model.addAttribute("updateExtension", "updatecomments");
+        model.addAttribute("deleteExtension", "deletecomments");
+        return "data";
     }
     @GetMapping("/theatres/all")
-    public String displayAllTheatres(){
-        return "displayalltheatres";
+    public String displayAllTheatres(Model model){
+        //List<Theatre> theaters = todo mvc.getalltheatres();
+        List <List<String>> fields = new ArrayList<>();
+        List <String> temp = new ArrayList<>();
+        for (Theater c : theaters){
+            temp.clear(); //empty the list first
+
+            temp.add(c.getId());
+            temp.add(c.getName());
+            temp.add(String.valueOf(c.getDate()));
+            temp.add(c.getEmail());
+
+            fields.add(temp); //commit list to overall list at end
+        }
+        String[] fieldNames ={"id","Name","Date","Email"};
+
+        model.addAttribute("entityList" , fields);
+        model.addAttribute("fieldNames", fieldNames);
+        model.addAttribute("title", "All comments");
+        model.addAttribute("creationExtension", "createcomment");
+        model.addAttribute("updateExtension", "updatecomments");
+        model.addAttribute("deleteExtension", "deletecomments");
+        return "data";
     }
     @GetMapping("/users/all")
-    public String displayAllUsers(){
-        return "displayallusers";
+    public String displayAllUsers(Model model){
+//List<Comment> comments = todo mvc.getallcomments();
+        List <List<String>> fields = new ArrayList<>();
+        List <String> temp = new ArrayList<>();
+        for (Comment c : comments){
+            temp.clear(); //empty the list first
+
+            temp.add(c.getId());
+            temp.add(c.getName());
+            temp.add(String.valueOf(c.getDate()));
+            temp.add(c.getEmail());
+
+            fields.add(temp); //commit list to overall list at end
+        }
+        String[] fieldNames ={"id","Name","Date","Email"};
+
+        model.addAttribute("entityList" , fields);
+        model.addAttribute("fieldNames", fieldNames);
+        model.addAttribute("title", "All comments");
+        model.addAttribute("creationExtension", "createcomment");
+        model.addAttribute("updateExtension", "updatecomments");
+        model.addAttribute("deleteExtension", "deletecomments");
+        return "data";
     }
     @GetMapping("/schedules/all")
-    public String displayAllSchedules(){
-        return "displayallschedules";
+    public String displayAllSchedules(Model model){
+//List<Comment> comments = todo mvc.getallcomments();
+        List <List<String>> fields = new ArrayList<>();
+        List <String> temp = new ArrayList<>();
+        for (Comment c : comments){
+            temp.clear(); //empty the list first
+
+            temp.add(c.getId());
+            temp.add(c.getName());
+            temp.add(String.valueOf(c.getDate()));
+            temp.add(c.getEmail());
+
+            fields.add(temp); //commit list to overall list at end
+        }
+        String[] fieldNames ={"id","Name","Date","Email"};
+
+        model.addAttribute("entityList" , fields);
+        model.addAttribute("fieldNames", fieldNames);
+        model.addAttribute("title", "All comments");
+        model.addAttribute("creationExtension", "createcomment");
+        model.addAttribute("updateExtension", "updatecomments");
+        model.addAttribute("deleteExtension", "deletecomments");
+        return "data";
     }
 
     //__________GET BY ID_____________
