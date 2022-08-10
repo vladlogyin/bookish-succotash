@@ -54,9 +54,12 @@ public class CommentController {
     }
 
     @PostMapping("/comments/add")
-    public Comment addComment(@RequestBody Comment newComment){
+    public ResponseEntity<String> addComment(@RequestBody Comment newComment){
+        if(repo.existsById(newComment.getId())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This movie allready exists");
+        }
         repo.save(newComment);
-        return newComment;
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @PutMapping("/comments/update")
