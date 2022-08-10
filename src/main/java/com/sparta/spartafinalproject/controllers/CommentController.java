@@ -4,6 +4,8 @@ import com.sparta.spartafinalproject.documents.Comment;
 import com.sparta.spartafinalproject.documents.Movie;
 import com.sparta.spartafinalproject.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,23 +22,35 @@ public class CommentController {
     }
 
     @GetMapping("/comments/id/{id}")
-    public Comment getCommentById(@PathVariable String id){
-        return repo.findById(id).get();
+    public ResponseEntity<Comment> getCommentById(@PathVariable String id){
+        if(repo.existsById(id)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id).get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @GetMapping("/comments/name/{name}")
-    public List<Comment> getCommentByName(@PathVariable String name){
-        return repo.findAllByName(name);
+    public ResponseEntity<List<Comment>> getCommentByName(@PathVariable String name){
+        if(repo.existsByName(name)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findAllByName(name));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @GetMapping("/comments/email/{email}")
-    public List<Comment> getCommentByEmail(@PathVariable String email){
-        return repo.findAllByEmail(email);
+    public ResponseEntity<List<Comment>> getCommentByEmail(@PathVariable String email){
+        if(repo.existsByEmail(email)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findAllByEmail(email));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @GetMapping("/comments/movie")
-    public List<Comment> getCommentsByMovie(@RequestBody Movie movie){
-        return repo.findAllByMovie(movie);
+    public ResponseEntity<List<Comment>> getCommentsByMovie(@RequestBody Movie movie){
+        if(repo.existsByMovie(movie)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findAllByMovie(movie));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PostMapping("/comments/add")
