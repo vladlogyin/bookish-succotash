@@ -17,4 +17,7 @@ public class WebController {
     public String loggingOut(){
         return "security/logout";
     }
+
+    @GetMapping("/accessDenied")
+    public String accessDeniedPage(){ return "security/accessDenied"; }
 }
