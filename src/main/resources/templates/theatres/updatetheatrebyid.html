@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Theatre</title>
+</head>
+<body>
+<div th:insert="../static/navigationbar.html" :: header> </div>
+<h1>Edit Theatre Form</h1>
+<form th:action="@{/theatre/*{id}/edit}" th:object="${theatreToEdit}" method="POST">
+    <label for="theatreId">Theatre ID</label>
+    <input type="text" id="theatreId" name="theatreId" th:field="*{theatreId}" /><br/><br>
+    <label for="location">Location</label>
+    <input type="text" id="location" name="location" th:field="*{location}"><br/><br>
+
+    <input type="hidden" id="id" name="id" th:field="*{id}" />
+
+    <input type="submit" value="Submit Update" />
+</form>
+
+</body>
+</html>

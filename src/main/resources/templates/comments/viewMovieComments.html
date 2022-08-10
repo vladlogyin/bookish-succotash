@@ -22,21 +22,23 @@
     tr:nth-child(even){
         background-color: beige;
     }
+    button{
+        font:icon;
+    }
 </style>
 <form class="form-inline my-2 my-lg-0">
-    <a class="btn btn-outline-success my-2 my-sm-0" href="/comment/new">Add new comment</a>
+    <button class="btn btn-outline-success my-2 my-sm-0" href="/comment/new">Add new comment</button>
 </form>
 <h2>Comment list</h2>
 <table>
     <tr>
-        <th> Movie Name</th>
-        <th> User name</th>
+        <th> User name </th>
         <th> Email </th>
         <th> Comment </th>
         <th> Date last edited </th>
     </tr>
-    <tr th:each="commment: ${comment}">
-        <td th:text="${comment.movie}"></td>
+    <tr th:each="commment : ${comments}">
+        <td th:text="${comment.movieId}"></td>
         <td th:text="${comment.name}"></td>
         <td th:text="${comment.email}"></td>
         <td th:text="${comment.text}"></td>

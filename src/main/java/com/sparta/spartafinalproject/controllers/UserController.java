@@ -28,17 +28,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
+    /* TODO is this necessary? Name is not a unique property
     @GetMapping("/users/by-name/{name}")
     public ResponseEntity<User> getUserByName(@PathVariable String name){
         if(repo.existsByNamen(name)){
             return ResponseEntity.status(HttpStatus.OK).body(repo.findByName(name));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }
+    } */
     @GetMapping("/users/by-email/{email}")
-    public ResponseEntity<Optional<User>> getUserByEmail(@PathVariable String email){
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email){
         if(repo.existsByEmail(email)){
-            return  ResponseEntity.status(HttpStatus.OK).body(repo.findByEmail(email));
+            return  ResponseEntity.status(HttpStatus.OK).body(repo.findByEmail(email).get());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
@@ -55,6 +56,7 @@ public class UserController {
     }
     @PostMapping("/user/new")
     public ResponseEntity<String> newUser(@RequestBody User newUser){
+        // TODO check if email already exists (assuming email is a unique key)
         if(repo.existsById(newUser.getId())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this user already exists");
         }
@@ -64,7 +66,7 @@ public class UserController {
 
     @PatchMapping("/user/update/{id}")
     public User updateUser(@PathVariable String id, @RequestBody User updateUser){
-        User user = repo.findById(id).get();
+        User user = repo.findById(id).get(); // TODO if the ID already matches, it should be enough to "just" persist the user to the database
         user.setEmail(updateUser.getEmail());
         user.setName(updateUser.getName());
         user.setPassword(updateUser.getPassword());

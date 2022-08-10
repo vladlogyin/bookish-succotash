@@ -30,9 +30,10 @@ public class TheaterController {
     }
 
     @GetMapping("/theater/by-theaterid/{id}")
-    public ResponseEntity<Optional<Theater>> getTheaterByTheaterId(@PathVariable int id){
-        if(repo.existByTheaterId(id)){
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTheaterId(id));
+    public ResponseEntity<Theater> getTheaterByTheaterId(@PathVariable int id){
+        var possibleTheater = repo.findByTheaterId(id);
+        if(possibleTheater.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(possibleTheater.get());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

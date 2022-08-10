@@ -6,11 +6,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface ScheduleRepository extends MongoRepository<Schedule, String> {
-    List<Object> findByTheaterId(int theaterId);
+    List<Schedule> findAllByTheaterId(String id);
 
-    Schedule findByTime(String time);
+    List<Schedule> findAllByMovieId(String movieId);
 
-    boolean existsByTime(String time);
-
-    boolean existsByTheaterId(int theaterId);
+    List<Schedule> findAllByTime(String time);
 }

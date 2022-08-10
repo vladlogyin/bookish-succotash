@@ -14,11 +14,6 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
 
     List<Comment> findAllByEmail(String email);
 
-    List<Comment> findAllByMovie(Movie movie);
+    List<Comment> findAllByMovieId(String id);
 
-    boolean existsByName(String name);
-
-    boolean existsByEmail(String email);
-
-    boolean existsByMovie(Movie movie);
 }

@@ -28,11 +28,8 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
     @GetMapping("/movies/title/{title}")
-    public ResponseEntity<List<Movie>> getMovieByTitle(@PathVariable String title){
-        if(repo.existsByTitle(title)){
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTitle(title));
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    public List<Movie> getMovieByTitle(@PathVariable String title){
+        return repo.findByTitleContainsIgnoreCase(title);
     }
 
     @PostMapping("/movies/add")

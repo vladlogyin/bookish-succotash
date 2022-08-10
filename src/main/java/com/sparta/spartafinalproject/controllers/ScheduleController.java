@@ -3,12 +3,12 @@ package com.sparta.spartafinalproject.controllers;
 import com.sparta.spartafinalproject.documents.Schedule;
 import com.sparta.spartafinalproject.documents.Theater;
 import com.sparta.spartafinalproject.repositories.ScheduleRepository;
+import com.sparta.spartafinalproject.repositories.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.spi.ResolveResult;
 import java.util.List;
 
 @RestController
@@ -16,6 +16,8 @@ public class ScheduleController {
 
     @Autowired
     private ScheduleRepository repo;
+    @Autowired
+    private TheaterRepository theaterRepo;
 
     @GetMapping("/schedule")
     public List<Schedule> getAllSchedule(){
@@ -29,18 +31,15 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
-    @GetMapping("/schedule/by-time/{time}")
-    public ResponseEntity<Schedule> getScheduleByTime(@PathVariable String time){
-        if(repo.existsByTime(time)){
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTime(time));
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    @GetMapping("/schedules/by-time/{time}")
+    public List<Schedule> getScheduleByTime(@PathVariable String time){
+        return repo.findAllByTime(time);
     }
-
-    @GetMapping("/Schedule/by-theaterid/{theaterId}")
-    public ResponseEntity<List<Object>> getScheduleByTheaterId(@PathVariable int theaterId){
-        if(repo.existsByTheaterId(theaterId)){
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTheaterId(theaterId));
+    @GetMapping("/schedules/by-theaterid/{theaterId}")
+    public ResponseEntity<List<Schedule>> getScheduleByTheaterId(@PathVariable String theaterId){
+        var possibleTheater = theaterRepo.findById(theaterId);
+        if(possibleTheater.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findAllByTheaterId(theaterId));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
