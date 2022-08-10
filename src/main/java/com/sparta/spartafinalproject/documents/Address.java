@@ -38,4 +38,18 @@ public class Address {
         this.postcode = postcode;
     }
 
+    @Override
+    public String toString()
+    {
+        StringBuilder sb= new StringBuilder();
+        sb.append(street1);
+        sb.append(" ");
+        sb.append(city);
+        sb.append(" ");
+        sb.append(state);
+        sb.append(" ");
+        sb.append(postcode);
+        return sb.toString();
+    }
+
 }
