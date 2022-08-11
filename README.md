@@ -22,7 +22,7 @@ A web application based on the [Mflix](https://www.mongodb.com/docs/atlas/sample
 We used the following tools to manage our project:
 - __GitHub__ for version control.
 - __Microsoft Teams Tasks__ for task management.
-- __Discord__ for communication and meetings.
+- __Discord & Microsoft Teams__ for communication and meetings.
 - __Code With Me (IntelliJ plugin)__ for collaborative work.
 
 ## Project Setup & Use
@@ -77,11 +77,23 @@ We have 2 defined roles which are assigned by logging in:
   - Username: Jeff
   - Password: jeff
 
-### User Interface (TODO)
+### User Interface
+
+Below is the Admin view.
+
+![image](/images/Movies.JPG)
+
+![image](/images/Theatres.JPG)
+
+![image](/images/Schedules.JPG)
+
+All of our pages follow a similar structure, they display all database entries for their respective entities with the functionality to update, delete, create and view more info.
 
 ## Testing
 
-### Frontend (TODO)
+### Frontend
+
+For the frontend we performed manual testing by going through each page in the web application and verifying that all interactions (buttons, navigation bar) function as intended.
 
 ### Backend
 
