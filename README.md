@@ -108,11 +108,11 @@ To test the update operation we first change one of the attributes of our Commen
 To test the delete operation we perform delete operation through the URL "/movcomments/delete/{id}" where we give the test Comment object's id as the path variable. We expect that we receive a 2__ successful response and that the Comment no longer exists in the database.
 
 ## Contributors
-- [Jeffrey Champion](https://github.com/Jchampion42)
-- [Kira Coke](https://github.com/kira-coke)
-- [Michael Matson](https://github.com/M-Matson)
-- [Vlad Logyin](https://github.com/vladlogyin)
-- [David Carew](https://github.com/0V3RL0AD)
-- [Jamie Scofield](https://github.com/JamieScofield)
-- [Billie Parsons](https://github.com/Flaxenfire)
-- [Omar Tehami](https://github.com/OTDZ)
+- [Jeffrey Champion](https://m.media-amazon.com/images/M/MV5BOTNmZGU0MDYtNDE4Zi00NTE4LTg0ZGEtYzBjOWNjOTkwMzdlXkEyXkFqcGdeQXVyMTg3Nzg5ODY@._V1_.jpg)
+- [Kira Coke](https://variety.com/wp-content/uploads/2021/07/Rick-Astley-Never-Gonna-Give-You-Up.png?w=681&h=383&crop=1)
+- [Michael Matson](https://static.wikia.nocookie.net/agk/images/1/18/21499dba0eec71730fdaa0534a82e163.jpg/revision/latest?cb=20210511185219)
+- [Vlad Logyin](https://note-store.com/upload/resize_cache/iblock/e43/325_380_2/Rick-Astley.jpg)
+- [David Carew](https://americansongwriter.com/wp-content/uploads/2022/03/RickAstley.jpeg?fit=2000%2C800)
+- [Jamie Scofield](https://static.ffx.io/images/$zoom_0.3543%2C$multiply_0.7554%2C$ratio_1.776846%2C$width_1059%2C$x_3%2C$y_27/t_crop_custom/q_86%2Cf_auto/f4c4e404c4edcc1c2b60450649a12ee841f1592a)
+- [Billie Parsons](https://helios-i.mashable.com/imagery/articles/076ZWWQaiV20K9dE4YCKiNE/hero-image.fill.size_1200x1200.v1611610122.png)
+- [Omar Tehami](https://www.pedestrian.tv/wp-content/uploads/2021/07/30/RICKastley.jpg?quality=80&resize=1280,720)

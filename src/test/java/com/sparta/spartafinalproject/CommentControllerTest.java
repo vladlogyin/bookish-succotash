@@ -68,7 +68,7 @@ public class CommentControllerTest {
         testComment.setName("John Bishop");
         testComment.setDate(Date.valueOf(LocalDate.of(1893, 5, 9)));//1893-05-09T00:00:00.000+00:00
         testComment.setEmail("john_bishop@fakegmail.com");
-        testComment.setMovie(testMovie);
+        testComment.setMovieId("573a1390f29313caabcd4135");
         testComment.setText("Id error ab at molestias dolorum incidunt. Non deserunt praesentium do...");
 
         if (repo.existsById(testComment.getId())) {

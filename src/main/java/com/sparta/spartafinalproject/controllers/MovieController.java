@@ -28,14 +28,21 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
     @GetMapping("/movies/title/{title}")
-    public List<Movie> getMovieByTitle(@PathVariable String title){
-        return repo.findByTitleContainsIgnoreCase(title);
+    public ResponseEntity<List<Movie>> getMovieByTitle(@PathVariable String title){
+        if(repo.existsByTitle(title)){
+            return ResponseEntity.status(HttpStatus.OK).body(repo.findByTitleContainsIgnoreCase(title));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PostMapping("/movies/add")
     public ResponseEntity<String> addMovie(@RequestBody Movie newMovie){
+        if(isMovieValid(newMovie))
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something went wrong");
+        }
         if(repo.existsById(newMovie.getId())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This movie allready exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This movie already exists");
         }
         repo.save(newMovie);
         return ResponseEntity.status(HttpStatus.OK).body("Success");
@@ -43,15 +50,28 @@ public class MovieController {
     }
 
     @PutMapping("/movies/update")
-    public Movie updateMovie(@RequestBody Movie updatedMovie){
+    public ResponseEntity<String> updateMovie(@RequestBody Movie updatedMovie){
+        if(isMovieValid(updatedMovie))
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something went wrong");
+        }
         repo.save(updatedMovie);
-        return updatedMovie;
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @DeleteMapping("/movies/delete/{id}")
-    public void deleteMovieById(@PathVariable String id){
+    public ResponseEntity<String> deleteMovieById(@PathVariable String id){
+        if(!repo.existsById(id)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("the schedule was not found");
+        }
         Movie toBeDeleted = repo.findById(id).get();
         repo.delete(toBeDeleted);
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
+    }
+
+    private boolean isMovieValid(Movie mov)
+    {
+        return mov.getTitle().length()>0 && mov.getPlot().length()>0 && mov.getCommentCount()>=0;
     }
 
 }

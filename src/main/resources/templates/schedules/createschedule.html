@@ -2,19 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Order from northwind</title>
+    <title>New Schedule</title>
 </head>
 <body>
 <div th:insert="../static/navigationbar.html" :: header> </div>
-<h1>Order Add Form</h1>
-<form th:action="@{/createuser/post}" th:object="${newUser}" method="POST">
-    <label for="name">name</label>
-    <input type="text" id="name" name="name" th:field="*{name}"><br/>
-    <label for="password">password</label>
-    <input type="text" id="password" name="password" th:field="*{password}"><br/>
+<h1>Add New Schedule </h1>
+<form th:action="@{/createschedule/post}" th:object="${newSchedule}" method="POST">
+    <label for="movieId">Movie</label>
+    <input type="text" id="movieId" name="movieId" th:field="*{movieId}"><br/>
+    <label for="theaterId">Theater</label>
+    <input type="text" id="theaterId" name="theaterId" th:field="*{theaterId}"><br/>
+    <label for="time">Time</label>
+    <input type="text" id="time" name="time" th:field="*{time}"></br>
 
-
-    <input type="submit" value="Submit Creation" />
+    <input type="submit" value="Submit Schedule" />
 </form>
 
 </body>

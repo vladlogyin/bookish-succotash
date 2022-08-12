@@ -11,4 +11,6 @@ public interface ScheduleRepository extends MongoRepository<Schedule, String> {
     List<Schedule> findAllByMovieId(String movieId);
 
     List<Schedule> findAllByTime(String time);
+
+    boolean existsByTime(String time);
 }

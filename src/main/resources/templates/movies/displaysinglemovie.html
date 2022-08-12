@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title th:text="${movie.title}"></title>
@@ -23,7 +23,7 @@
             padding: 9px;
         }
         tr:nth-child(even){
-            background-color: beige;
+            background-color: #f5f5dc;
         }
         button{
             font:icon;
@@ -33,7 +33,7 @@
 <body>
 <div th:insert="../static/navigationbar.html" :: header> </div>
 
-<h1 th:text="${movie.movie}"></h1>
+<h1 th:text="${movie.title}"></h1>
 <span th:text="${movie.releaseDate}"></span>
 <p th:text="${movie.plot}"></p>
 
@@ -42,15 +42,18 @@
 <h2> Schedules</h2>
 <table>
     <tr>
-        <th> Movie  </th>
+        <th> Movie </th>
         <th> Theater </th>
         <th> Time </th>
+
     </tr>
-    <tr th:each="schedule : ${movie.schedules}">
-    <td th:text="${schedule.movieId}"></td>
-    <td th:text="${schedule.theaterId}"></td>
-    <td th:text="${schedule.time}"></td>
-    </tr>
+    <th:block th:each="schedule : ${schedules}">
+        <tr>
+            <td> <span th:text="${movie.title}"></span></td>
+            <td> <span th:text="${api.getTheaterById(schedule.theaterId).theaterId}"></span></td>
+            <td> <span th:text="${schedule.time}"></span></td>
+        </tr>
+    </th:block>
 
 </table>
 <br>
@@ -62,14 +65,24 @@
         <th> Date </th>
         <th> Comment </th>
     </tr>
-    <tr th:each="comment : ${movie.comments}"></tr>
+    <tr th:each="comment : ${comments}">
     <td th:text="${comment.name}"></td>
     <td th:text="${comment.date}"></td>
     <td th:text="${comment.text}"></td>
+    </tr>
 </table>
-<!--  INFORMATION ABOUT MOVIE -->
-<!--SCHEDULE TIMES-->
-<!--COMMENTS-->
+<!-- INFORMATION ABOUT MOVIE -->
+<!-- SCHEDULE TIMES -->
+<!-- COMMENTS -->
+<h1>Post a comment</h1>
+<form th:action="@{/createcomment/post}" th:object="${newComment}" method="POST">
+    <input type="text" th:value="*{movieId}" th:field="*{movieId}" hidden/>
+    <input type="text" th:value="*{name}" th:field="*{name}" hidden/>
+    <input type="text" th:value="*{email}" th:field="*{email}" hidden/>
+    <br>
+    <textarea id="comment" name="comment" th:field="*{text}" placeholder="Enter comment here (Max 400 characters)" rows="4" cols="100" ></textarea>
+    <input type="submit" value="Submit Comment" />
+</form>
 
 </body>
 </html>

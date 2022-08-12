@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Title</title>
 </head>
-<style>
-    Body{
-        font-family: "Comic Sans MS", "Comic Sans", cursive;
-        background-color: #999999;
-    }
-</style>
+<body>
 <body>
 <div th:insert="../static/navigationbar.html" :: header> </div>
+<h3 th:text="${user.id}"> </h3><br>
+<h3 th:text="${user.email}"> </h3>
+<h3 th:text="${user.name}"> </h3>
+
+</body>
 </body>
 </html>

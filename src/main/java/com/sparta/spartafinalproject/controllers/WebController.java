@@ -20,4 +20,9 @@ public class WebController {
 
     @GetMapping("/accessDenied")
     public String accessDeniedPage(){ return "security/accessDenied"; }
+
+    @GetMapping("/mistake")
+    public String mistakePage(){
+        return "ohno";
+    }
 }

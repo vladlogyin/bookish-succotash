@@ -28,14 +28,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
-    /* TODO is this necessary? Name is not a unique property
-    @GetMapping("/users/by-name/{name}")
-    public ResponseEntity<User> getUserByName(@PathVariable String name){
-        if(repo.existsByNamen(name)){
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findByName(name));
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    } */
+
     @GetMapping("/users/by-email/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable String email){
         if(repo.existsByEmail(email)){
@@ -56,21 +49,32 @@ public class UserController {
     }
     @PostMapping("/user/new")
     public ResponseEntity<String> newUser(@RequestBody User newUser){
-        // TODO check if email already exists (assuming email is a unique key)
+        if(repo.existsByEmail(newUser.getEmail())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this email already exists");
+        }
         if(repo.existsById(newUser.getId())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this user already exists");
+        }
+        if(!isValidUser(newUser)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please fix this now...");
         }
         repo.save(newUser);
         return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
-    @PatchMapping("/user/update/{id}")
-    public User updateUser(@PathVariable String id, @RequestBody User updateUser){
-        User user = repo.findById(id).get(); // TODO if the ID already matches, it should be enough to "just" persist the user to the database
-        user.setEmail(updateUser.getEmail());
-        user.setName(updateUser.getName());
-        user.setPassword(updateUser.getPassword());
-        return repo.save(user);
+    @PostMapping("/user/update")
+    public ResponseEntity updateUser(@RequestBody User updateUser){
+
+        if(!isValidUser(updateUser))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please fix this now...");
+        repo.save(updateUser);
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
+    }
+
+    private boolean isValidUser(User user)
+    {
+        var possibleDuplicate = repo.findByEmail(user.getEmail());
+        return !(possibleDuplicate.isPresent()&&possibleDuplicate.get().getId()!=user.getId());
     }
 
 

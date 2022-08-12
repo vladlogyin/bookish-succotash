@@ -19,7 +19,7 @@ public class Comment {
 
     private String email;
 
-    @Field(name="movie_id", targetType = FieldType.OBJECT_ID)
+    @Field(name="movie_id")
     private String movieId;
     private String text;
 

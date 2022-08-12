@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface MovieRepository extends MongoRepository<Movie, String> {
     List<Movie> findByTitle(String title);
     List<Movie> findByTitleContainsIgnoreCase(String title);
+
+    boolean existsByTitle(String title);
 }

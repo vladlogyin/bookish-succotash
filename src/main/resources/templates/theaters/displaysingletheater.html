@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="../static/navigationbar.html" :: header> </div>
+<h3 th:text="${theater.id}"> </h3><br>
+<h3 th:text="${theater.theaterId}"> </h3>
+<h3 th:text="${theater.location.address.getPostcode()}"> </h3>
+
+<table>
+    <thread>
+        <tr><th>Movies</th><tr>
+    </thread>
+    <tbody>
+    <tr th:each="movie : ${movies}">
+        <td><span th:text="${movie.title}"></span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

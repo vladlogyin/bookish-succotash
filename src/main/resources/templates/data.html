@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <head>
   <meta charset="UTF-8">
   <title th:text="${title}"></title>
@@ -8,7 +9,7 @@
           margin: 7% 15%;
       }
       h1{
-          color: #800080;
+          color: #d25353;
           font-size: 100px;
       }
     table {
@@ -63,17 +64,17 @@
         </td>
         <td >
             <form th:action="'/' + ${getExtension} + '/'  + ${entity[0]} " method="get">
-                <button>More info</button>
+                <button>Select</button>
             </form>
         </td>
 
         <td >
-            <form th:action="'/' + ${updateExtension} + '/'  + ${entity[0]} " method="get">
+            <form sec:authorize="hasAnyAuthority('ADMIN')" th:action="'/' + ${updateExtension} + '/'  + ${entity[0]} " method="get">
                 <button>update</button>
             </form>
         </td>
         <td>
-            <form  th:action="'/' + ${deleteExtension} + '/' + ${entity[0]} " method="get">
+            <form sec:authorize="hasAnyAuthority('ADMIN')" th:action="'/' + ${deleteExtension} + '/' + ${entity[0]} " method="get">
                 <button>delete</button>
             </form>
         </td>

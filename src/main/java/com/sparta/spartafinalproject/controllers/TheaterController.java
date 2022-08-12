@@ -32,7 +32,7 @@ public class TheaterController {
     @GetMapping("/theater/by-theaterid/{id}")
     public ResponseEntity<Theater> getTheaterByTheaterId(@PathVariable int id){
         var possibleTheater = repo.findByTheaterId(id);
-        if(possibleTheater.isPresent()){
+        if(!possibleTheater.isPresent()){
             return ResponseEntity.status(HttpStatus.OK).body(possibleTheater.get());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -40,23 +40,33 @@ public class TheaterController {
 
     @PostMapping("/theater/add")
     public ResponseEntity<String> addTheater(@RequestBody Theater newTheater){
-        if(repo.existsById(newTheater.getId())){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This theater already exists");
+        var possibleTheater = repo.findById(newTheater.getId());
+        if(possibleTheater.isPresent()||!isValidTheater(newTheater)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ewwow"); //uwu
         }
         repo.save(newTheater);
         return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @PutMapping("/theater/update")
-    public Theater updateTheater(@RequestBody Theater updatedTheater){
+    public ResponseEntity<String> updateTheater(@RequestBody Theater updatedTheater){
+        if(!isValidTheater(updatedTheater)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This theater already exists");
+        }
         repo.save(updatedTheater);
-        return updatedTheater;
+        return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
     @DeleteMapping("/theater/delete/{id}")
     public void deleteTheaterById(@PathVariable String id){
         Theater toBeDeleted = repo.findById(id).get();
         repo.delete(toBeDeleted);
+    }
+
+    private boolean isValidTheater(Theater th)
+    {
+        var possibleDuplicate = repo.findByTheaterId(th.getTheaterId());
+        return !(possibleDuplicate.isPresent()&&possibleDuplicate.get().getId()!=th.getId());
     }
 
 }

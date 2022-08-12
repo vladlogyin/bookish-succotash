@@ -16,4 +16,5 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
 
     List<Comment> findAllByMovieId(String id);
 
+    boolean existsByName(String name);
 }

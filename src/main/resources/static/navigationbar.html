@@ -21,7 +21,7 @@
             left: 0;
             right: 0;
             top: 0;
-            height: 50px;
+            height: 60px;
             display: flex;
             align-items: center;
             z-index: 2;
@@ -92,10 +92,8 @@
             text-decoration: none;
         }
         img {
-            height: 15px;
-
-            max-width: 75px;
-            max-height: 150px;
+            max-width: 100%;
+            max-height: 100%;
         }
     </style>
 </Head>
@@ -103,27 +101,34 @@
 <header>
     <nav>
         <ul>
-            <div class="dropdown"><img src=https://i.imgur.com/zXhjEyM.png></div>
+            <div class="dropdown"><img src=https://i.imgur.com/zXhjEyM.png
+                                       height="1%"></div>
             <div class="dropdown">
-                <button class="menubtn">Home</button>
+                <button class="menubtn">&#127968; Home</button>
                 <div class="dropdown-content">
                     <a href="/home">Home</a>
                 </div>
             </div>
-            <div class="dropdown" sec:authorize="hasAnyAuthority('USER','ADMIN')">
-                <a class="no-underline" href="/movies/all"><button class="menubtn">Movies</button></a>
-            </div>
-            <div class="dropdown" sec:authorize="!hasAnyAuthority('ADMIN')">
-                <a class="no-underline" href="/users/all"><button class="menubtn">Users</button></a>
-            </div>
-            <div class="dropdown" sec:authorize="hasAnyAuthority('USER','ADMIN')">
-                <a class="no-underline" href="/theaters/all"><button class="menubtn">Theaters</button></a>
+            <div class="dropdown" >
+                <a class="no-underline" href="/movies/all"><button class="menubtn">&#127909; Movies</button></a>
             </div>
             <div class="dropdown" sec:authorize="hasAnyAuthority('ADMIN')">
-                <a class="no-underline" href="/schedules/all"><button class="menubtn">Schedules</button></a>
+                <a class="no-underline" href="/users/all"><button class="menubtn">&#129485; Users</button></a>
+            </div>
+            <div class="dropdown">
+                <a class="no-underline" href="/theaters/all"><button class="menubtn">&#127917; Theaters</button></a>
+            </div>
+            <div class="dropdown" >
+                <a class="no-underline" href="/schedules/all"><button class="menubtn">&#128467; Schedules</button></a>
+            </div>
+            <div class="dropdown" >
+                <a class="no-underline" href="/comments/all"><button class="menubtn">&#128172; Comments</button></a>
             </div>
             <div class="dropdown" sec:authorize="!isAuthenticated()">
                 <a class="no-underline" href="/login"><button class="menubtn">Sign in</button></a>
+            </div>
+            <div class="dropdown" sec:authorize="isAuthenticated()">
+                <a class="no-underline" href="/logout"><button class="menubtn">Log out</button></a>
             </div>
 
         </ul>

@@ -2,16 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Order from northwind</title>
+    <title>Edit Movie</title>
 </head>
 <body>
 <div th:insert="../static/navigationbar.html" :: header> </div>
-<h1>Order Edit Form</h1>
-<form th:action="@{/orders/*{id}/edit}" th:object="${orderToEdit}" method="POST">
+<h1>Movie Edit Form</h1>
+<form th:action="@{/updatemovies/update}" th:object="${movieToEdit}" method="POST">
     <label for="id">ID</label>
     <input type="text" id="id" name="id" th:field="*{id}"><br/>
-    <label for="commentCount">Comment Count</label>
-    <input type="text" id="commentCount" name="commentCount" th:field="*{commentCount}"><br/>
     <label for="plot">Plot</label>
     <input type="text" id="plot" name="plot" th:field="*{plot}"><br/>
     <label for="title">Title</label>

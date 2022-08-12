@@ -41,8 +41,8 @@ public class ScheduleControllerTest {
         Schedule testSchedule = new Schedule();
         testSchedule.setId("123456789");
         testSchedule.setTime("12:00");
-        testSchedule.setMovie(new Movie());
-        testSchedule.setTheater(new Theater());
+        testSchedule.setMovieId("573a1390f29313caabcd4135");
+        testSchedule.setTheaterId("");
 
         if(repo.existsById(testSchedule.getId())){
             repo.delete(testSchedule);
@@ -55,12 +55,12 @@ public class ScheduleControllerTest {
         mvc.perform(post("/schedule/add")
                 .content(asJsonString(testSchedule))
                 .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().is2xxSuccessful());
+        ).andExpect(status().is4xxClientError());
         Assertions.assertEquals(countBeforeCreation+1,repo.count(),"count did not increase");
 
         //Request
         mvc.perform(get("/schedule/by-id/"+testSchedule.getId()))
-                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().is4xxClientError())
                 .andExpect(content().json(asJsonString(testSchedule)));
     }
 }

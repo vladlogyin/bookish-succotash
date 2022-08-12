@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -21,66 +19,160 @@ public class NavigationController {
     @Autowired
     MflixService api;
     //_________POST_____________
+    //___COMMENT___
     @GetMapping("/createcomment")
-    public String createComment(){
+    public String createComment(Model model){
+        Comment comment = new Comment();
+        model.addAttribute("newComment",comment);
         return "/comments/createcomment";
     }
-    @GetMapping("/createtheatre")
-    public String createTheatre(){
-        return "/theaters/createtheatre";
+    @PostMapping("/createcomment/post")
+    public ModelAndView commitCommentToDatabase(@ModelAttribute Comment newComment){
+        System.out.println(newComment.getText());
+        System.out.println(newComment.getName());
+        System.out.println(newComment.getEmail());
+        System.out.println(newComment.getMovieId());
+        newComment.setDate(new Date());
+        boolean result = api.createComment(newComment); //false if this failed
+        System.out.println("Created comment?"+result);
+        ModelAndView mv = new ModelAndView("redirect:/displaymovies/"+newComment.getMovieId());
+        mv.addObject("attribute", "redirectWithRedirectPrefix");
+        return mv;
     }
+    //__THEATER__
+    @GetMapping("/createtheater")
+    public String createTheater(Model model){
+        Theater theater = new Theater();
+        model.addAttribute("newTheater",theater);
+        return "/theaters/createtheater";
+    }
+    @PostMapping("/createtheater/post")
+    public ModelAndView commitTheaterToDatabase(@ModelAttribute Theater theater, ModelMap modelMap, Model model){
+        api.createTheater(theater);
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        return new ModelAndView("redirect:/theaters/all", modelMap);
+    }
+    //____USER____
     @GetMapping("/createuser")
     public String createUser(Model model){
         User user = new User();
         model.addAttribute("newUser",user);
         return "/users/createuser";
     }
-/*    @PostMapping("/createueer/post")
-    public String commitUsertoDatabase(@RequestBody ){
+    @PostMapping("/createuser/post")
+    public ModelAndView commitUserToDatabase(@ModelAttribute User user, ModelMap modelMap, Model model){
+            api.createUser(user);
+            model.addAttribute("attribute", "redirectWithRedirectPrefix");
+            return new ModelAndView("redirect:/users/all", modelMap);
+    }
 
-    }*/
-
+    //____MOVIE____
     @GetMapping("/createmovie")
     public String createMovie(Model model){
         Movie movie = new Movie();
         model.addAttribute("newMovie", movie);
         return "/movies/createmovie";
     }
+    @PostMapping("/createmovie/post")
+    public ModelAndView commitMovieToDatabase(@ModelAttribute Movie movie, ModelMap modelMap, Model model){
+        api.createMovie(movie);
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        return new ModelAndView("redirect:/movies/all", modelMap);
+    }
+    //__SCHEDULE__
     @GetMapping("/createschedule")
-    public String createSchedule(){
+    public String createSchedule(Model model){
+        Schedule schedule = new Schedule();
+        model.addAttribute("newSchedule",schedule);
         return "/schedules/createschedule";
     }
+    @PostMapping("/createschedule/post")
+    public ModelAndView commitScheduleToDatabase(@ModelAttribute Schedule schedule, ModelMap modelMap, Model model){
+        api.createSchedule(schedule);
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        return new ModelAndView("redirect:/schedules/all", modelMap);
+    }
 
-    //__________UPDATE____________
+    //__________UPDATE____________//
+    //____COMMENT____//
     @GetMapping("/updatecomments/{id}")
     public String updateCommentById(@PathVariable String id , Model model){
-        model.addAttribute("id", id);
+        Comment comment = api.getCommentById(id);
+        model.addAttribute("commentToEdit",comment);
         return "/comments/updatecommentbyid";
     }
-    @GetMapping("/updatetheaters/{id}")
-    public String updateTheatreById(@PathVariable String id , Model model){
-        model.addAttribute("id", id);
-        return "/theaters/updatetheatrebyid";
+    @PostMapping("/updatecomments/update")
+    public ModelAndView updateCommentInDatabase(@ModelAttribute Comment comment, ModelMap modelMap, Model model){
+        api.updateComment(comment);
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        return new ModelAndView("redirect:/comments/all", modelMap);
     }
+
+    //____THEATER____//
+    @GetMapping("/updatetheaters/{id}")
+    public String updateTheaterById(@PathVariable String id , Model model){
+        Theater theater = api.getTheaterById(id);
+        model.addAttribute("theaterToEdit",theater);
+        return "/theaters/updatetheaterbyid";
+    }
+    @PostMapping("/updatetheaters/update")
+    public ModelAndView updateTheatertInDatabase(@ModelAttribute Theater theater, ModelMap modelMap, Model model){
+        boolean result = api.updateTheater(theater);//do somethign
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        return new ModelAndView("redirect:/theaters/all", modelMap);
+    }
+
+    //_____USER____
     @GetMapping("/updateusers/{id}")
     public String updateUserById(@PathVariable String id , Model model){
-        model.addAttribute("id", id);
+        User user = api.getUserById(id);
+        model.addAttribute("userToEdit", user);
         return "/users/updateuserbyid";
     }
+    @PostMapping("/updateusers/update")
+    public ModelAndView updateUsertInDatabase(@ModelAttribute User user, ModelMap modelMap, Model model){
+        api.updateUser(user);
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        return new ModelAndView("redirect:/users/all", modelMap);
+    }
+
+    //___SCHEDULE___//
     @GetMapping("/updateschedules/{id}")
     public String updateScheduleById(@PathVariable String id , Model model){
-        model.addAttribute("id", id);
+        Schedule schedule = api.getScheduleById(id);
+        model.addAttribute("scheduleToEdit", schedule);
         return "/schedules/updateschedulebyid";
     }
+    @PostMapping("/updateschedules/update")
+    public ModelAndView updateScheduletInDatabase(@ModelAttribute Schedule scheduleToEdit, ModelMap modelMap, Model model){
+        boolean success = api.updateSchedule(scheduleToEdit);
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        if(success) {
+            return new ModelAndView("redirect:/schedules/all", modelMap);
+        }
+        else
+        {
+            return new ModelAndView("redirect:/mistake", modelMap);
+        }
+    }
 
+    //_____MOVIE_____//
     @GetMapping("/updatemovies/{id}")
     public String updatemovies(@PathVariable String id, Model model){
-        model.addAttribute("id", id);
+        Movie movieToEdit = api.getMovieById(id);
+
+        model.addAttribute("movieToEdit", movieToEdit);
         return "/movies/updatemoviebyid";
+    }
+    @PostMapping("/updatemovies/update")
+    public ModelAndView updateMovieInDatabase(@ModelAttribute Movie movie, ModelMap modelMap, Model model){
+        //todo: api.patchMovie()
+        model.addAttribute("attribute", "redirectWithRedirectPrefix");
+        return new ModelAndView("redirect:/movies/all", modelMap);
     }
 
 
-    //__________GET ALL____________
+    //__________GET ALL____________//
     @GetMapping("/comments/all")
     public String displayAllComments(Model model){
         List<Comment> comments = api.getAllComments();
@@ -210,46 +302,79 @@ public class NavigationController {
         model.addAttribute("getExtension", "displaymovies");
         model.addAttribute("creationExtension", "createmovie");
         model.addAttribute("updateExtension", "updatemovies");
-        model.addAttribute("deleteExtension", "deletemoviess");
+        model.addAttribute("deleteExtension", "deletemovies");
         return "data";
     }
 
 
-    //__________GET BY ID_____________
+    //__________GET BY ID_____________//
 
-    //  TODO Get rid of this VVVV
+
     @GetMapping("/displaycomments/{id}")
     public String displayCommentById(@PathVariable String id , Model model){
-        model.addAttribute("id", id);
-
-        return "displaycommentbyid";
+        Comment comment = api.getCommentById(id);
+        Movie movie = api.getMovieById(comment.getMovieId());
+        if (movie==null){
+            movie=new Movie();
+        }
+        model.addAttribute("movie",movie);
+        model.addAttribute("comment", comment);
+        return "/comments/displaysinglecomment";
     }
     @GetMapping("/displaytheaters/{id}")
     public String displayTheatersById(@PathVariable String id, Model model){
-        model.addAttribute("id", id);
-        return "displaytheatrebyid";
+        Theater theater = api.getTheaterById(id);
+        List<Schedule> schedules=api.getSchedulesByTheater(theater);
+        List<Movie> movies= new ArrayList<>();
+        for (Schedule s : schedules){
+            if(api.getMovieBySchedule(s)!=null) {
+                movies.add(api.getMovieBySchedule(s));
+            }
+        }
+
+        model.addAttribute("movies", movies);
+        model.addAttribute("theater",theater);
+        return "/theaters/displaysingletheater";
     }
     @GetMapping("/displayusers/{id}")
     public String displayUsersById(@PathVariable String id, Model model){
-        model.addAttribute("id", id);
-        return "displayuserbyid";
+        User user = api.getUserById(id);
+        model.addAttribute("user",user);
+        return "/users/displaysingleuser";
     }
     @GetMapping("/displayschedules/{id}")
-    public String displayAllSchedules(@PathVariable String id, Model model){
-        model.addAttribute("id", id);
-        return "displayschedulebyid";
+    public String displayScheduleById(@PathVariable String id, Model model){
+        Schedule schedule = api.getScheduleById(id);
+        Movie movie = api.getMovieBySchedule(schedule);
+        Theater theater = api.getTheaterBySchedule(schedule);
+        List<Schedule> movieSchedule = api.getSchedulesByMovie(movie);
+        List<Comment> movieComments = api.getCommentsByMovie(movie);
+        model.addAttribute("comments",movieComments);
+        model.addAttribute("schedules",movieSchedule);
+        model.addAttribute("movie", movie);
+        model.addAttribute("theater", theater);
+        return "movies/displaysinglemovie";
     }
     @GetMapping("/displaymovies/{id}")
-    public String displayAllMovies(@PathVariable String id, Model model){
+    public String displayMovieById(@PathVariable String id, Model model){
         Movie movie = api.getMovieById(id);
-        List<Comment> comments = api.getCommentsByMovie(movie);
-        List<Schedule> schedules = api.getSchedulesByMovie(movie);
-
+        List<Schedule> movieSchedule = api.getSchedulesByMovie(movie);
+        List<Schedule> cleanSchedules = new ArrayList<>();
+        for (Schedule s : movieSchedule) {
+            if (s.getTheaterId()!=null && s.getTime()!=null)
+            cleanSchedules.add(s);
+        }
+        List<Comment> movieComments = api.getCommentsByMovie(movie);
+        Comment com = new Comment();
+        com.setMovieId(movie.getId());
+        com.setEmail("christian_williams@fakegmail.com");
+        com.setName("Christian Williams");
+        model.addAttribute("newComment", com);
+        model.addAttribute("comments",movieComments);
+        model.addAttribute("api",api);
+        model.addAttribute("schedules",cleanSchedules);
         model.addAttribute("movie", movie);
-        model.addAttribute("comments" , comments);
-        model.addAttribute("schedules", schedules);
-
-        return "movies/displayschedulebyid";
+        return "movies/displaysinglemovie";
     }
 
     //__________DELETE BY ID___________
@@ -285,9 +410,9 @@ public class NavigationController {
     }
 
     public void getVolcano(){
-        //----\
-        //     \
-        //==   /
+        //----\         _________________
+        //     \       /   Oh Noes!!!   /
+        //==   /   ___/________________/
         //----/
         {
             {
