@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -120,7 +121,13 @@ public class MflixServiceImpl implements MflixService {
 
     @Override
     public List<Movie> getAllMovies() {
-        return movieCon.getAllMovies();
+        System.out.println("Trying to get movies");
+        var revMovies= movieCon.getAllMovies();
+        System.out.println("Reversing the list...");
+        Collections.reverse(revMovies);
+        System.out.println("Got movies");
+        return revMovies.subList(0,100);
+
     }
 
     @Override

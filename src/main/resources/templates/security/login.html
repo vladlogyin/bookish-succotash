@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <title>Login</title>
   <style>
-    Body{
-      font-family: "Comic Sans MS", "Comic Sans", cursive;
+    body{
+      font-family: "Helvetica, Sans-Serif";
 
-      background-color: grey ;
+      background-color: #999999;
+      cursor: crosshair;
     }
     button {
       background-color: #2c2c2c ;
@@ -19,11 +20,38 @@
       cursor: crosshair;
     }
     form {
-      border: 3px solid #f1f1f1;
+      border-bottom: 3px;
+      border-radius:5px;
+      box-shadow: #00000022 0px 0px 5px 2px;
     }
     .container{
       padding: 25px;
-      background-color: hotpink;
+      background-color: firebrick;
+    }
+
+    .css-selector {
+      background: linear-gradient(314deg, #999999, #cd3a3a, #999999);
+      background-size: 400% 400%;
+
+      -webkit-animation: AnimationName 10s ease infinite;
+      -moz-animation: AnimationName 10s ease infinite;
+      animation: AnimationName 10s ease infinite;
+    }
+
+    @-webkit-keyframes AnimationName {
+      0%{background-position:87% 0%}
+      50%{background-position:14% 100%}
+      100%{background-position:87% 0%}
+    }
+    @-moz-keyframes AnimationName {
+      0%{background-position:87% 0%}
+      50%{background-position:14% 100%}
+      100%{background-position:87% 0%}
+    }
+    @keyframes AnimationName {
+      0%{background-position:87% 0%}
+      50%{background-position:14% 100%}
+      100%{background-position:87% 0%}
     }
   </style>
 </head>
@@ -31,7 +59,7 @@
 <div th:insert="../static/navigationbar.html" :: header> </div>
 <center><h1>Login</h1></center>
 <form th:action="@{/login}" method="POST">
-  <div class="container">
+  <div class="container css-selector">
   <label>Username <input type="text " name="username"/></label><br/>
   <br>
   <label>Password <input type="password" name="password"/></label><br/>

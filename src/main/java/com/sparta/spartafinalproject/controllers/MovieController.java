@@ -37,7 +37,7 @@ public class MovieController {
 
     @PostMapping("/movies/add")
     public ResponseEntity<String> addMovie(@RequestBody Movie newMovie){
-        if(isMovieValid(newMovie))
+        if(!isMovieValid(newMovie))
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something went wrong");
         }
@@ -51,7 +51,7 @@ public class MovieController {
 
     @PutMapping("/movies/update")
     public ResponseEntity<String> updateMovie(@RequestBody Movie updatedMovie){
-        if(isMovieValid(updatedMovie))
+        if(!isMovieValid(updatedMovie))
         {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("something went wrong");
         }

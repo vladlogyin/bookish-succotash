@@ -9,16 +9,16 @@
 <h1>Edit Comment</h1>
 <form th:action="@{/updatecomments/update}" th:object="${commentToEdit}" method="POST">
     <label for="name">Name</label>
-    <input type="text" id="name" name="name" th:field="*{name}" /><br/>
+    <input type="text" id="name" name="name" th:value="*{name}" th:field="*{name}" /><br/>
     <label for="email">Email</label>
-    <input type="email" id="email" name="email" th:field="*{email}" /><br/>
+    <input type="email" id="email" name="email" th:value="*{email}" th:field="*{email}" /><br/>
     <label for="date">Current date</label>
-    <input type="date" id="date" name="date" th:field="*{date}" /><br/>
+    <input type="date" id="date" name="date" th:value="*{date}"  th:field="*{date}" /><br/>
     <label for="comment">Comment</label>
-    <textarea id="comment" name="comment" th:field="*{text}" rows="4" cols="100" ></textarea>
+    <textarea id="comment" name="comment" th:value="*{text}"  th:field="*{text}" rows="4" cols="100" ></textarea>
     <br>
     <br>
-    <input type="hidden" id="commentID" name="commentID" th:field="*{id}" />
+    <input type="hidden" id="commentID" name="commentID" th:value="*{id}" th:field="*{id}" />
 
     <input type="submit" value="Submit Update" />
 </form>

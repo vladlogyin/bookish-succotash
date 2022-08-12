@@ -103,6 +103,7 @@ public class NavigationController {
     }
     @PostMapping("/updatecomments/update")
     public ModelAndView updateCommentInDatabase(@ModelAttribute Comment comment, ModelMap modelMap, Model model){
+        comment.setDate(new Date());
         api.updateComment(comment);
         model.addAttribute("attribute", "redirectWithRedirectPrefix");
         return new ModelAndView("redirect:/comments/all", modelMap);
@@ -130,7 +131,7 @@ public class NavigationController {
         return "/users/updateuserbyid";
     }
     @PostMapping("/updateusers/update")
-    public ModelAndView updateUsertInDatabase(@ModelAttribute User user, ModelMap modelMap, Model model){
+    public ModelAndView updateUsertInDatabase(@ModelAttribute("userToEdit") User user, ModelMap modelMap, Model model){
         api.updateUser(user);
         model.addAttribute("attribute", "redirectWithRedirectPrefix");
         return new ModelAndView("redirect:/users/all", modelMap);
@@ -165,8 +166,8 @@ public class NavigationController {
         return "/movies/updatemoviebyid";
     }
     @PostMapping("/updatemovies/update")
-    public ModelAndView updateMovieInDatabase(@ModelAttribute Movie movie, ModelMap modelMap, Model model){
-        //todo: api.patchMovie()
+    public ModelAndView updateMovieInDatabase(@ModelAttribute("movieToEdit") Movie movie, ModelMap modelMap, Model model){
+        api.updateMovie(movie);
         model.addAttribute("attribute", "redirectWithRedirectPrefix");
         return new ModelAndView("redirect:/movies/all", modelMap);
     }
@@ -406,7 +407,7 @@ public class NavigationController {
     public  ModelAndView deleteMoviesById(@PathVariable String id , Model model, ModelMap modelMap) {
         api.deleteMovieById(id);
         model.addAttribute("attribute", "redirectWithRedirectPrefix");
-        return new ModelAndView("redirect:/moviess/all", modelMap);
+        return new ModelAndView("redirect:/movies/all", modelMap);
     }
 
     public void getVolcano(){

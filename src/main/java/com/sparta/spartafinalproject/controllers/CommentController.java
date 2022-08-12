@@ -76,6 +76,7 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ughhhh");
         Movie mov = certainMovie.get();
         mov.setCommentCount(mov.getCommentCount()+1);
+        movieRepo.save(mov);
         return ResponseEntity.status(HttpStatus.OK).body("Success");
     }
 
